@@ -6,7 +6,7 @@
             <input type="text" id="id" name="id" value="<?=$user->getId()?>" class="form-control w70" <?=$disabled?> >
         </div>
         <div class="line-input shadow p-2 my-3 rounded">
-            <label for="username" class="lab30 obligatoire">IDENTIFIANT:</label>
+            <label for="username" class="lab30 obligatoire">IDENTIFIANT+:</label>
             <input required type="text" id="username" name="username" value="<?=$user->getUsername()?>" class="form-control w70" <?=$disabled?> >
         </div>
         <div class="line-input shadow p-2 my-3 rounded">
