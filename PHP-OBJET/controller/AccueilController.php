@@ -5,7 +5,8 @@
             $page="accueil";
             extract($_GET);
             switch($page) {
-                case 'accueil' : $file = 'view/accueil/accueil.html.php';
+                case 'accueil' : 
+                    $file = 'view/accueil/accueil.html.php';
                     $variables = [];
                     $this->generatePage($file);
                     break;
@@ -13,7 +14,8 @@
                     $variables = [];
                     $this->generatePage($file);
                     break;
-                case 'portfolio' : $file = 'view/accueil/portfolio.html.php';
+                case 'portfolio' : 
+                    $file = 'view/accueil/portfolio.html.php';
                     $variables = [];
                     $this->generatePage($file);
                     break;
@@ -48,6 +50,15 @@
                     ];
                     $response = json_encode($response);
                     echo $response;
+                    break;
+                case 'error':
+                    $file = 'view/accueil/error.html.php';
+                    $message = "Vous n'avez pas le droit d'acceder à cette page!";
+                    $variables = [
+                        "title"=> "Message d'erreur",
+                        "message"=> $message,
+                    ];
+                    $this->generatePage($file, $variables);
                     break;
             }
         }

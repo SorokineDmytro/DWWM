@@ -61,7 +61,6 @@ CREATE TABLE users (
     roles JSON);
 
 
-
 -----------------Insertion de données dans la table user
 CREATE EXTENSION pgcrypto;
 
@@ -69,3 +68,48 @@ INSERT INTO users (username, password, roles) VALUES
 ('marie', crypt('1234', gen_salt('bf')), '["ROLE_VENTE", "ROLE_USER"]'),
 ('paul', crypt('1234', gen_salt('bf')), '["ROLE_APPRO", "ROLE_USER"]'),
 ('roger', crypt('1234', gen_salt('bf')), '["ROLE_ASSISTANT", "ROLE_APPRO", "ROLE_USER"]');
+
+
+-----------------Creation de la table Menu
+CREATE TABLE menu (
+    id SERIAL PRIMARY KEY,
+    parent_id INTEGER,
+    libelle VARCHAR(255),
+    url VARCHAR(255),
+    role VARCHAR(100),
+    icone VARCHAR(255),
+    FOREIGN KEY(parent_id) REFERENCES menu(id));
+
+    -----------------Insertion de données dans la table menu
+    INSERT INTO menu(libelle, url, role, icone) VALUES 
+    ('Accueil', 'index.php', 'ROLE_USER', 'fa fa-home'),
+    ('Produit', 'index.php?url=produit', 'ROLE_APPRO', ''),
+    ('Tiers', 'index.php?url=tiers', 'ROLE_APPRO', ''),
+    ('Vente', 'index.php?url=vente', 'ROLE_VENTE', ''),
+    ('Appro', 'index.php?url=appro', 'ROLE_APPRO', ''),
+    ('Mouvement', '', 'ROLE_INFORMATIQUE', ''),
+    ('Parametre', '', 'ROLE_ADMIN', '');
+
+     id | parent_id |  libelle  |          url          |       role        |   icone    
+----+-----------+-----------+-----------------------+-------------------+------------
+  1 |           | Accueil   | index.php             | ROLE_USER         | fa fa-home
+  2 |           | Produit   | index.php?url=produit | ROLE_APPRO        | 
+  3 |           | Tiers     | index.php?url=tiers   | ROLE_APPRO        | 
+  4 |           | Vente     | index.php?url=vente   | ROLE_VENTE        | 
+  5 |           | Appro     | index.php?url=appro   | ROLE_APPRO        | 
+  6 |           | Mouvement |                       | ROLE_INFORMATIQUE | 
+  7 |           | Parametre |                       | ROLE_ADMIN        | 
+    -----------------Insertion de données dans la table menu (sous-menus)
+    INSERT INTO menu(parent_id, libelle, url, role, icone) VALUES
+    (6, 'Vente', 'index.php?url=vente', 'ROLE_INFORMATIQUE', ''),
+    (6, 'Appro', 'index.php?url=appro', 'ROLE_INFORMATIQUE', ''),
+    (6, 'Interne', 'index.php?url=interne', 'ROLE_INFORMATIQUE', ''),
+    (6, 'Demarque', 'index.php?url=demarque', 'ROLE_INFORMATIQUE', ''),
+
+    (7, 'Role', 'index.php?url=role', 'ROLE_ADMIN', ''),
+    (7, 'User', 'index.php?url=security', 'ROLE_ADMIN', ''),
+    (7, 'Categorie', 'index.php?url=categorie', 'ROLE_ADMIN', ''),
+    (7, 'Type Tiers', 'index.php?url=typeTiers', 'ROLE_ADMIN', ''),
+    (7, 'Type Mouvement', 'index.php?url=typeMouvement', 'ROLE_ADMIN', '');
+
+    UPDATE menu SET icone = 'fas fas fa-gear' WHERE id = 7;

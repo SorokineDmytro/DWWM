@@ -22,9 +22,30 @@
         <a href="#" class="text-light mx-2"><i class="fa fa-laptop fa-2x"></i></a>
         <a href="#nav" class="btn bg-light text-dark mx-2 navbar-toggler" data-bs-toggle="collapse"><i class="fa fa-bars"></i></a>
         <div class="collapse navbar-collapse justify-content-between" id="nav">
-          
-          <?=$_SESSION['menu']?>
-
+          <ul class="nav navbar-nav">
+            <li class="nav-item mx-2"><a href="index.php?url=accueil" class="nav-link text-light fs-5"><i class="fas fa-house-user me-2"></i>Accueil</a></li>
+            <?php if(MyFct::isGranted('ROLE_APPRO')):?>
+              <li class="nav-item mx-2"><a href="index.php?url=mouvement" class="nav-link text-light fs-5"><i class="fas fa-arrow-right-arrow-left me-2"></i>Mouvement</a></li>
+              <li class="nav-item mx-2"><a href="index.php?url=tiers" class="nav-link text-light fs-5"><i class="fas fa-users me-2"></i>Tiers</a></li>
+              <li class="nav-item mx-2"><a href="index.php?url=produit" class="nav-link text-light fs-5"><i class="fas fa-box-archive me-2"></i>Produit</a></li>
+              <li class="nav-item mx-2"><a href="index.php?url=produit" class="nav-link text-light fs-5"><i class="fas fas fa-box me-2"></i>Appro</a></li>
+            <?php endif ?>
+            <?php if(MyFct::isGranted('ROLE_VENTE')):?>
+              <li class="nav-item mx-2"><a href="index.php?url=produit" class="nav-link text-light fs-5"><i class="fas fas fa-boxes-packing me-2"></i>Vente</a></li>
+            <?php endif ?>
+            
+            <?php if(MyFct::isGranted('ROLE_ADMIN')):?>
+            <li class="nav-item dropdown mx-2"><a href="" class="nav-link text-light fs-5 dropdown-toggle"  data-bs-toggle="dropdown"><i class="fas fas fa-gear me-2"></i>Parametre</a>
+              <ul class="dropdown-menu ms-2 bg-dark border-light">
+                <li class="nav-item mx-2"><a href="index.php?url=categorie" class="nav-link text-light">Catégorie</a></li>
+                <li class="nav-item mx-2"><a href="index.php?url=typeTiers" class="nav-link text-light">Type Tiers</a></li>
+                <li class="nav-item mx-2"><a href="index.php?url=typeMouvement" class="nav-link text-light">Type Mouvement</a></li>
+                <li class="nav-item mx-2"><a href="index.php?url=security" class="nav-link text-light">User</a></li>
+                <li class="nav-item mx-2"><a href="index.php?url=role" class="nav-link text-light">Role</a></li>
+              </ul>
+            </li>
+            <?php endif ?>
+          </ul>
           <div class="d-flex position-relative">
             <a href="" class="nav-link text-light dropdown-toggle fs-5 my-1 mx-2" 
             data-bs-toggle="dropdown"><i class="fa fa-bell"></i><sup id="id_nonLu"></sup></a>

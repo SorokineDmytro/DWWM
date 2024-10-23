@@ -12,6 +12,7 @@
             extract($_GET);
             switch($action){
                 case "list":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $file="view/produit/list.html.php";
                     $columns=["numProduit","designation"];
                     $type="object";
@@ -38,6 +39,7 @@
                     $this->generatePage($file,$variables);
                     break;
                 case "save":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     if($_FILES['image']['name']){
                         $file=$_FILES['image'];
                         $name=$file['name'];
@@ -58,6 +60,7 @@
                     header("location:index.php?url=produit");
                     break;
                 case "create":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $file = "view/produit/form.html.php";
                     $produit = new Produit();
                     $produit -> setImage("aucune_image.jpg");
@@ -70,6 +73,7 @@
                     $this->generatePage($file, $variables);
                     break;  
                 case "read":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $file="view/produit/form.html.php";
                     $produit = $pm->find($id);
                     $variables = [
@@ -82,6 +86,7 @@
                     $this->generatePage($file, $variables, $base); 
                     break;
                 case "update":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $produit = $pm->find($id);
                     $file="view/produit/form.html.php";
                     $variables = [
@@ -93,10 +98,12 @@
                     $this->generatePage($file, $variables);
                     break;  
                 case "delete":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $pm->delete($id);
                     header("location:index.php?url=produit");
                     break;  
                 case "search":
+                    $this->control_role(['ROLE_ADMIN','ROLE_COMPTA','ROLE_ASSISTANT','ROLE_APPRO']);
                     $columns = ["numproduit", "designation"];
                     $produits = $pm->searchByCondition($columns,$mot,"object",[],"order by id");
                     $file = "view/produit/list.html.php";

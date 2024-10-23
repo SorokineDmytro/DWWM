@@ -7,6 +7,7 @@
 
             switch ($action) {
                 case "list":
+                    $this->accessControl("ROLE_ADMIN");
                     $file="view/role/list.html.php";
                     $variables=[
                         "title"=>"LISTE DE ROLES",
@@ -15,6 +16,7 @@
                     $this->generatePage($file,$variables);
                     break; 
                 case "create":
+                    $this->accessControl("ROLE_ADMIN");
                     $file="view/role/form.html.php";
                     $role=new Role();
                     $variables=[
@@ -25,6 +27,7 @@
                     $this->generatePage($file,$variables);
                     break; 
                 case "read":
+                    $this->accessControl("ROLE_ADMIN");
                     $file="view/role/form.html.php";
                     $role=$rm->find($id); // RoleManager va chercher un ID
                     $variables=[
@@ -36,6 +39,7 @@
                     $this->generatePage($file, $variables, $base);
                     break;
                 case "update":
+                    $this->accessControl("ROLE_ADMIN");
                     $file= "view/role/form.html.php";
                     $role=$rm->find($id); // RoleManager va chercher un ID
                     $variables=[
@@ -46,10 +50,12 @@
                     $this->generatePage($file,$variables);
                     break;
                 case "delete":
+                    $this->accessControl("ROLE_ADMIN");
                     $rm->delete($id);
                     header("location:index.php?url=role");
                     break; 
                 case "save":
+                    $this->accessControl("ROLE_ADMIN");
                     $rm->save($_POST);
                     header("location:index.php?url=role");
                     break;

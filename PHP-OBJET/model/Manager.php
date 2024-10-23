@@ -116,9 +116,9 @@ class Manager {
         $values=[];
         foreach($columns as $value){
             if($condition==""){
-                $condition.="$value like ?";
+                $condition.="$value ilike ?";
             }else{
-                $condition.=" or $value like ?";
+                $condition.=" or $value ilike ?";
             }
             $values[]="%$mot%";
         }

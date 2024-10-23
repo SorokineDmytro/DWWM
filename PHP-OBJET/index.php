@@ -1,6 +1,21 @@
 <?php
+    session_start();
     require_once("./service/extra.php");
     spl_autoload_register("router");
+    
+    if(!$_SESSION){
+        $_SESSION=[
+            'username'=>'Visiteur',
+            'roles'=>['ROLE_USER'],
+        ];
+        $myFct = new MyFct();
+        $menu = $myFct->afficherMenu();
+        $_SESSION['menu'] = $menu;
+    } 
+
+    
+
+  
     //---------forme générale de l'url :   index.php?url=nom_class&action=nom_action
     // $um=new UserManager;
     // $myFct=new MyFct;
