@@ -2,6 +2,56 @@
     require_once("config/parametre.php");
     class MyFct extends Manager {
 
+        public function showRowsMenu(){
+            $mm=new MenuManager();
+            $menus=$mm->findAll([],"object","order by id asc");
+            $rows=$this->getRowsMenu(null,0,$menus);
+            return $rows;
+        } 
+
+        public function getRowsMenu($parent_id,$niveau,$menus){ // la fonctionne qui creer le menu du syte en tableau
+            $html='';
+
+            foreach($menus as $menu){
+                $menu_id=$menu->getId();
+                $menu_parent_id=$menu->getParent_id();
+                $menu_libelle=$menu->getLibelle();
+                $menu_url=$menu->getUrl();
+                $menu_role=$menu->getRole();
+                $menu_icone=$menu->getIcone();
+                $enfants=$menu->getEnfants();
+                if($menu_parent_id==$parent_id){
+                    $espace='';
+                    for($i=1;$i<=$niveau;$i++){
+                        $espace.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    }
+                    if($niveau==0){
+                        $text='fs-5 fw-bold';
+                    }else{
+                        $text='fs-6';
+                    }
+                    if($menu_icone){
+                        $i="<i class='$menu_icone'></i>";
+                    }else{
+                        $i="";
+                    }
+                    $menu_libelle="$espace $menu_libelle";
+                    $html.="
+                        <tr>
+                            <td class='text-center mx-2'><input type='checkbox' id='$menu_id' name='choix' onclick='onlyOne(this)' ></td>
+                            <td class='$text' >$menu_libelle</td>
+                            <td>$menu_url</td>
+                            <td>$menu_role</td>
+                            <td>$i $menu_icone</td>
+                        </tr>
+                    ";
+                    $html.=$this->getRowsMenu($menu_id,$niveau +1 , $menus);
+
+                }
+            }
+            return $html;
+        } 
+
         public function afficherMenu() { // la fonctionne qui affiche le menu du syte
             $mm = new MenuManager();
             $conditions = [];
@@ -12,7 +62,7 @@
             return $menu;
         }
 
-        public function getMenu($parent_id, $niveau, $menus) {
+        public function getMenu($parent_id, $niveau, $menus) { // la fonctionne qui creer le menu du syte en ul/li
             $html = "";
             $niveau_precedent = 0;
             if ($niveau == 0) {
@@ -25,6 +75,7 @@
                 $menu_url = $menu->getUrl();
                 $menu_role = $menu->getRole();
                 $menu_icone = $menu->getIcone();
+                $menu_enfants = $menu->getEnfants();
                 if($parent_id == $menu_parent_id && self::isGranted($menu_role)) {
                     if ($niveau_precedent != $niveau) {
                         $html .= "<ul class='dropdown-menu mx-2 bg-dark border-light'>";

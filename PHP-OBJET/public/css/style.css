@@ -89,6 +89,31 @@ p.scroll-sm{
     visibility: hidden;
 } 
 
+/*---------------------Context Menu------------*/
+.contextmenu {
+    width: 200px;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 2px 2px 20px #ccc;
+}
+
+.contextmenu ul {
+    padding: 0;
+}
+
+.contextmenu a {
+    display: block;
+    width: 100%;
+    line-height: 50px;
+    padding: 0 10px;
+}
+
+.contextmenu a:hover {
+    background-color: #ccc;
+    color: #fff;
+}
+/*---------------------------------------------*/
 header {
     position: sticky;
     top: 0;
